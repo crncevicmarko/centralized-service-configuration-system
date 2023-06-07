@@ -1,8 +1,8 @@
-name : push
-on :
-  push :
+name: push
+on:
+  push:
     branches:
-    - main
+      - main
 
 jobs:
   tests:
@@ -20,22 +20,19 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Set up QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       -
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-actions@v2
       -
-      -
-        name: Login to Docker
+      - name: Login to Docker
         uses: docker/login-action@v2
+        with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: ${{  secrets.DOCKERHUB_USERNAME}}/gorest:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/gorest:latest
