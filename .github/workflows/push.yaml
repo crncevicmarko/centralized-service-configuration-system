@@ -18,11 +18,11 @@ jobs:
         run: go test -v ./...
 
   docker:
-   runs-on: ubuntu-latest
-     steps:
+    runs-on: ubuntu-latest
+    steps:
       -
         name: Set up QEMU
-        uses: docker/setup-qumu-actions@v2
+        uses: docker/setup-qemu-actions@v2
       -
       -
         name: Set up Docker Buildx
