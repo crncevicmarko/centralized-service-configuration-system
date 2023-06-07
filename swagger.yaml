@@ -1,0 +1,223 @@
+basePath: /
+info:
+    description: 'Title: Configuration'
+    title: Configuration
+    version: 0.0.1
+paths:
+    /config/:
+        post:
+            description: Add new config
+            operationId: createConfig
+            parameters:
+                - description: 'name: body'
+                  in: body
+                  name: body
+                  required: true
+                  schema: {}
+                  x-go-name: Body
+            responses:
+                "201":
+                    $ref: '#/responses/ResponseConfig'
+                "400":
+                    $ref: '#/responses/ErrorResponse'
+                "415":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - config
+    /config/{id}/:
+        delete:
+            description: Delete config
+            operationId: deleteConfig
+            parameters:
+                - description: Config ID
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "204":
+                    $ref: '#/responses/NoContentResponse'
+                "404":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - config
+    /config/{id}/{version}/:
+        get:
+            description: Get config by id
+            operationId: getConfigById
+            parameters:
+                - description: Config ID
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "200":
+                    $ref: '#/responses/ResponseConfig'
+                "404":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - config
+    /config/{id}/{version}/{label}/:
+        get:
+            description: Get config by label
+            operationId: getConfigByLabel
+            parameters:
+                - description: Config ID
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+                - description: Config version
+                  in: path
+                  name: version
+                  required: true
+                  type: string
+                  x-go-name: Version
+                - description: Config label
+                  in: path
+                  items:
+                    type: string
+                  name: label
+                  required: true
+                  type: array
+                  x-go-name: Label
+            responses:
+                "404":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - config
+    /group/:
+        post:
+            description: Create group
+            operationId: createGroup
+            parameters:
+                - description: 'name: body'
+                  in: body
+                  name: body
+                  required: true
+                  schema: {}
+                  x-go-name: Body
+            responses:
+                "201":
+                    $ref: '#/responses/ResponseGroup'
+                "400":
+                    $ref: '#/responses/ErrorResponse'
+                "415":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - group
+    /group/{id}/:
+        get:
+            description: Get group
+            operationId: getGroup
+            parameters:
+                - description: Group ID
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "200":
+                    $ref: '#/responses/ResponseGroup'
+                "404":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - group
+        put:
+            description: Update group
+            operationId: updateGroup
+            responses:
+                "201":
+                    $ref: '#/responses/ResponseGroup'
+                "400":
+                    $ref: '#/responses/ErrorResponse'
+                "415":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - group
+    /group/{id}/{version}/:
+        delete:
+            description: Delete group by id
+            operationId: deleteGroup
+            parameters:
+                - description: Group ID
+                  in: path
+                  name: id
+                  required: true
+                  type: string
+                  x-go-name: Id
+            responses:
+                "204":
+                    $ref: '#/responses/NoContentResponse'
+                "404":
+                    $ref: '#/responses/ErrorResponse'
+            tags:
+                - group
+produces:
+    - application/json
+responses:
+    ErrorResponse:
+        description: ""
+        headers:
+            message:
+                description: |-
+                    Message of the error
+                    in: string
+                type: string
+            status:
+                description: |-
+                    Error status code
+                    in: int64
+                format: int64
+                type: integer
+    NoContentResponse:
+        description: ""
+    ResponseConfig:
+        description: ""
+        headers:
+            entries:
+                description: |-
+                    Entries
+                    in: map[string]string
+            id:
+                description: |-
+                    Id of the config
+                    in: string
+                type: string
+            label:
+                description: |-
+                    List of labels of the config
+                    in: []string
+                items:
+                    type: string
+                type: array
+            version:
+                description: |-
+                    Version of the config
+                    in: string
+                type: string
+        schema:
+            additionalProperties: {}
+            type: object
+    ResponseGroup:
+        description: ""
+        headers:
+            group:
+                description: |-
+                    Configs in the group
+                    in: []*Config
+                items: {}
+                type: array
+            version:
+                description: |-
+                    Version of the group
+                    in: string
+                type: string
+schemes:
+    - http
+swagger: "2.0"
